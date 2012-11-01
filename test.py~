@@ -1,0 +1,8 @@
+#! /usr/bin/env python
+#coding=utf-8
+from CmdChoice import *
+wx = write_xml()
+wx.set_tag("/home/est863/Desktop/2012-PL-Zhanghongliang/PL model mol files/51-79-6urethane.mol","/home/est863/Desktop/sytmac/result.txt")
+
+c=CmdChoice()  
+c.PathChoiceAndExecute('MOPAC','/home/est863/Desktop/sytmac/formopac/71-23-8propanol.mop')  

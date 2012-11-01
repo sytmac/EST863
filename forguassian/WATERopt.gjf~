@@ -1,0 +1,12 @@
+%chk=WATERopt.chk
+%nproc=4
+%mem=8GB
+#p rb3lyp/6-31+g(d,p) opt freq polar
+
+Title Card Required
+
+0 1
+ O                  0.00000000    0.00000000    0.11704100
+ H                  0.00000000    0.76348700   -0.46816500
+ H                  0.00000000   -0.76348700   -0.46816500
+

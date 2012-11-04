@@ -7,9 +7,11 @@ import sys
 sys.path.append("/usr/local/lib/")
 import openbabel,pybel
 import web
+import threading
 from  controllers import GaussianExecute
 from  controllers import MopacExecute
 from  controllers import DragonExecute
+from  controllers.MolToGjfAndMop import *
 class Cas:
     def POST(self):
         cas_info=web.input()
@@ -51,13 +53,24 @@ class Files:
     def InputWithUploadFile(self,filename):
         fileExt=filename.split('.')[-1]
         if cmp(fileExt,'gjf')==0:
-            print 'input gjf file'
+            print 'input gjf file: '+str(filename)
             GaussianExecute.GuassianDisposal(filename)
         elif cmp(fileExt,'mop')==0:
             print 'input mop file'   
-            MopacExecute.DealWithMopac(filename)         
+            MopacExecute.DealWithMopac(filename) 
+        # when mol file is uploaded ,we start 3 thread to  act 
+        # using Dragon Mopac and Gaussian respectively        
         elif cmp(fileExt,'mol')==0:
-            DragonExecute.DragonDisposal(filename)
+            #DragonExecute.DragonDisposal(filename)
+            MolToGjfAndMop(filename)
+            gjf_filename=filename.split('.')[0]+'.gjf'
+            print gjf_filename
+            GaussianThread=threading.Thread(target=GaussianExecute.GuassianDisposal,args=(gjf_filename,))
+            GaussianThread.start() 
+            mop_filename=filename.split('.')[0]+'.mop'
+            print mop_filename
+            MopacThread=threading.Thread(target=MopacExecute.DealWithMopac,args=(mop_filename,))
+            MopacThread.start()
             print 'input mol file'
         else:
             print 'illegal input file formation'

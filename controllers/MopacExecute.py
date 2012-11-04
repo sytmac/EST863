@@ -10,6 +10,7 @@ from controllers.Mopac import Mopac
 def DealWithMopac(MopacFile):
     m=Mopac(MopacFile)
     m.Gasphase_MopToOut()
+    
     #m.Fluentphase_MopToOut()
 '''
 t1=threading.Thread(target=DealWithMopac,args=('/home/est863/workspace/863program/src/formopac/toluene.mop',))

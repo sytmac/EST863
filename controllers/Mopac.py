@@ -55,31 +55,47 @@ class Mopac():
         f.writelines(lines)
         f.close()
         
-        Cmd=self.OrderPath+self.InputFilepath+self.GasMopfile
-        subprocess.Popen(Cmd,shell=True)
-           
-        #whether Gas.out does exist and out file has been produced completely
-        while (os.path.isfile(self.InputFilepath+self.InputfilenameWithoutExt+'Gas.out')==False) :
-            continue
-        #time.sleep(0.5)
-        
-        #to measure the out file
-        #####################################################################
-        f=open(self.InputFilepath+self.InputfilenameWithoutExt+'Gas.out','r')
-        lines=f.readlines();
-        length=len(lines)
-        #print lines
-        regex=".*MOPAC DONE.*"
-        while(length==0):
+        if(os.path.isfile(self.InputFilepath+self.InputfilenameWithoutExt+'Gas.out')==True):
+            f=open(self.InputFilepath+self.InputfilenameWithoutExt+'Gas.out','r')
             lines=f.readlines();
             length=len(lines)
-        while(re.match(regex,lines[length-1])==None):
-            time.sleep(0.1)
-            lines=f.readlines()
+            f.close()
+            regex=".*MOPAC DONE.*"
+            if(re.match(regex,lines[length-1])!=None):
+                self.ParameterExtractFromOut(self.InputFilepath+self.InputfilenameWithoutExt+'Gas.out')
+            else:
+                while(re.match(regex,lines[length-1])==None):
+                    time.sleep(0.1)
+                    lines=f.readlines()
+                    length=len(lines)
+                self.ParameterExtractFromOut(self.InputFilepath+self.InputfilenameWithoutExt+'Gas.out')               
+        else:
+            Cmd=self.OrderPath+self.InputFilepath+self.GasMopfile
+            subprocess.Popen(Cmd,shell=True)
+               
+            #whether Gas.out does exist and out file has been produced completely
+            while (os.path.isfile(self.InputFilepath+self.InputfilenameWithoutExt+'Gas.out')==False) :
+                continue
+            #time.sleep(0.5)
+            
+            #to measure the out file
+            #####################################################################
+            f=open(self.InputFilepath+self.InputfilenameWithoutExt+'Gas.out','r')
+            lines=f.readlines();
             length=len(lines)
-            #print lines[length-1]
-        ###################################################################
-        self.ParameterExtractFromOut(self.InputFilepath+self.InputfilenameWithoutExt+'Gas.out')
+            #print lines
+            regex=".*MOPAC DONE.*"
+            while(length==0):
+                lines=f.readlines();
+                length=len(lines)
+            while(re.match(regex,lines[length-1])==None):
+                time.sleep(0.1)
+                lines=f.readlines()
+                length=len(lines)
+                #print lines[length-1]
+            f.close()
+            ###################################################################
+            self.ParameterExtractFromOut(self.InputFilepath+self.InputfilenameWithoutExt+'Gas.out')
     def Fluentphase_MopToOut(self):
         f=open(self.InputFilepath+self.Mopfilename,'r')
         lines=f.readlines()
@@ -126,25 +142,28 @@ class Mopac():
                     self.ParameterList.append(List)
                     #print list
                     #######remove '\n' in  ParameterList
+        print self.ParameterList
         while(1):
             try:
                 self.ParameterList.remove(['\n'])
             except:
                 break
-        print self.ParameterList
-
-        HOFKCAL= float(self.ParameterList[0][5])
-        HOFKJ=float(self.ParameterList[0][8])
-        #print self.ParameterList[1][3]
-        TE=float(self.ParameterList[1][3])
-        EE=float(self.ParameterList[2][3])
-        CCR=float(self.ParameterList[3][3])
-        CA=float(self.ParameterList[4][3])
-        CV=float(self.ParameterList[5][3])
-        IonizationPotential=float(self.ParameterList[7][3])
-        HOMO=float(self.ParameterList[8][5])
-        LOMO=float(self.ParameterList[8][6])
-        MV=float(self.ParameterList[10][3])
+        #print self.ParameterList
+        try:
+            HOFKCAL= float(self.ParameterList[0][5])
+            HOFKJ=float(self.ParameterList[0][8])
+            #print self.ParameterList[1][3]
+            TE=float(self.ParameterList[1][3])
+            EE=float(self.ParameterList[2][3])
+            CCR=float(self.ParameterList[3][3])
+            CA=float(self.ParameterList[4][3])
+            CV=float(self.ParameterList[5][3])
+            IonizationPotential=float(self.ParameterList[7][3])
+            HOMO=float(self.ParameterList[8][5])
+            LOMO=float(self.ParameterList[8][6])
+            MV=float(self.ParameterList[10][3])
+        except:
+            print "self.ParameterList"+str(self.ParameterList)
                     ###############################################################
                     
         Qmax=-1.0
@@ -187,7 +206,8 @@ class Mopac():
                 break
             length=length-1
         print "mop parameter computation finished"
-'''     
+'''
 m=Mopac('ben.mop')
 m.Gasphase_MopToOut()
 '''
+#m.ParameterExtractFromOut("/home/est863/workspace/863program/src/formopac/ben/benGas.out")

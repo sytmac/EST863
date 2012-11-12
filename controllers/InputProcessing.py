@@ -64,11 +64,9 @@ class Files:
             #DragonExecute.DragonDisposal(filename)
             MolToGjfAndMop(filename)
             gjf_filename=filename.split('.')[0]+'.gjf'
-            print gjf_filename
             GaussianThread=threading.Thread(target=GaussianExecute.GuassianDisposal,args=(gjf_filename,))
             GaussianThread.start() 
             mop_filename=filename.split('.')[0]+'.mop'
-            print mop_filename
             MopacThread=threading.Thread(target=MopacExecute.DealWithMopac,args=(mop_filename,))
             MopacThread.start()
             print 'input mol file'

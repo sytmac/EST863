@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<link href="../css/modern.css" rel="stylesheet">
+<head><meta http-equiv="Content-Type" content="text/html;charset=gb2312">
+	<style type="text/css">
+		head1 
+		{  
+			position: absolute;  
+			width:100px;  
+			height:50px;  
+			left:30%;  
+			top:20%;  
+			margin-left:-50px;  
+			margin-top:-25px;  
+			border:1px solid #000
+			color: black; font-size:45px;text-align:center;
+		}
+		supportedbrower
+		{
+			position: absolute;  
+			width:50px;  
+			height:20px;  
+			right:20%;  
+			top:80%;  
+			margin-left:-50px;  
+			margin-top:-25px;  
+			border:1px solid #000
+			color: black; font-size:20px;text-align:center;
+		}
+		.table1
+		{
+			position: absolute;   
+			top:30%;  
+			
+		}
+		body{ font-size:5px;}
+		input{ vertical-align:middle; margin:0; padding:0}
+		.hidetabel{border-right-style:none}
+		.file-box{ position:relative;width:340px}
+		.btn{ background-color:#FFF; border:1px solid #CDCDCD;height:24px; width:70px;}
+		.file{ position:absolute; top:0; right:80px; height:24px; filter:alpha(opacity:0);opacity: 0;width:260px }
+		
+	</style>
+</head>
+<body>
+	<div>
+	<head1><strong> ChemicalsCloudPlatform</strong></head1>
+	</div>
+	<table  border class="table1">
+
+		  <form name="FORM1" action="Files" method="post" enctype="multipart/form-data">
+			<tr>
+				<td >
+					  <center>Files input(file type mol,mop,gif included)</center>
+				</td>
+				<td >
+					<div class="file-box">
+						<input type="file" name="myfile" class="file" id="fileField" size="28" onchange="document.getElementById('textfield').value=this.value" />
+						<input type='text' name='textfield' id='textfield'/>				
+						<input type="submit" name="file_submit" class="btn" value="upload" /> 					
+					</div>
+				</td>
+			</script>
+
+			</tr>
+
+		  </form>
+	 
+		<form name="FORM2" action="SMI" method="post" enctype="multipart/form-data">
+				<tr >
+					<td >
+						<center>SMILE:</center>
+					</td>
+					<td >
+							<input type="text"   name="smile"/>
+							<input type="submit" name="smile_submit" value="query"/>							
+					</td>
+				</tr>
+							
+		</form>
+		<form name="FORM3" action="CAS" method="post" enctype="multipart/form-data">
+				<tr >
+					<td >
+						<center>CAS:</center>
+					</td>
+					<td >
+						<input type="text" name="cas" />
+						<input type="submit" name="cas_submit" value="query"/>
+					</td>
+				</tr>
+		</form>
+	</table>
+</body>
+</html>

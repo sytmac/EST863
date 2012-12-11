@@ -161,36 +161,8 @@ class Gaussian():
             self.GjfParameterChange(self.InputFilepath + self.Inputfilename, '#p.*', '#p rb3lyp/6-31+g(d,p) opt freq polar')       
                                 #进入针对xml解析的计算分子描述符原始文件的路径,进行计算
             Cmd = self.OrderPath + self.InputFilepath + self.Inputfilename 
-            subprocess.Popen(Cmd, shell=True)
-            while(1):
-                try:
-                    f = open(self.InputFilepath + self.InputfilenameWithoutExt + '.log', 'r')
-                    break
-                except:
-                    continue
-        #####################################################################to check the file to the end
-        f = open(self.InputFilepath + self.InputfilenameWithoutExt + '.log', 'r')
-        lines = f.readlines();
-        length = len(lines)
-        regex = ".*Normal termination.*"
-        regex2 = ".*Error termination.*"
-        while(length == 0):
-            lines = f.readlines();
-            length = len(lines)
-        while(re.match(regex, lines[length - 1]) == None):
-            time.sleep(1)                  
-            if(length == 0):
-                continue
-            else:
-                f = open(self.InputFilepath + self.InputfilenameWithoutExt + '.log', 'r')
-                lines = f.readlines()            
-                length = len(lines)
-                f.close()
-                if(self.InputFileValidityCheck(lines, length, regex2) == False):
-                    self.InputExceptionFlag = True
-                    return;                
-        f.close()
-                    ###################################################################
+            subprocess.Popen(Cmd, shell=True).wait()
+
         #search for Mulliken atomic charges:
         f = open(self.InputFilepath + self.InputfilenameWithoutExt + '.log', 'r')
         lines = f.readlines()
@@ -222,71 +194,18 @@ class Gaussian():
         self.GjfParameterChange(self.InputFilepath + self.Inputfilename, '#p.*', '#p rb3lyp/6-31+g(d,p) opt freq polar')       
                             #进入针对xml解析的计算分子描述符原始文件的路径,进行计算
         Cmd = self.OrderPath + self.InputFilepath + self.Inputfilename + ' ' + self.InputfilenameWithoutExt + '.log'
-        subprocess.Popen(Cmd, shell=True)
-        #####################################################################to check the file to the end
-        f = open(self.InputFilepath + self.InputfilenameWithoutExt + '.log', 'r')
-        lines = f.readlines();
-        length = len(lines)
-        regex = ".*Normal termination.*"
-        while(length == 0):
-            lines = f.readlines();
-            length = len(lines)
-        while(re.match(regex, lines[length - 1]) == None):
-            time.sleep(1)                  
-            if(length == 0):
-                continue
-            else:
-                f = open(self.InputFilepath + self.InputfilenameWithoutExt + '.log', 'r')
-                lines = f.readlines()            
-                length = len(lines)
-                f.close()
-        f.close()
-        ###################################################################               
+        subprocess.Popen(Cmd, shell=True).wait()          
         print "Gasoptlogfile_produce has been finished " 
     def IPlogfile_produce(self):
         #进入针对xml解析的计算分子描述符原始文件的路径,进行计算
         Cmd = self.OrderPath + self.InputFilepath + self.Inputfilename + ' ' + self.InputfilenameWithoutExt + '.IPlog'
-        subprocess.Popen(Cmd, shell=True)
-        while(1):
-            try:
-                f = open(self.InputFilepath + self.InputfilenameWithoutExt + '.IPlog', 'r')
-            except:
-                continue
-            else:
-                break
-        #####################################################################to check the file to the end
-        f = open(self.InputFilepath + self.InputfilenameWithoutExt + '.IPlog', 'r')
-        lines = f.readlines();
-        length = len(lines)
-        regex = ".*Normal termination.*"
-        while(length == 0):
-            lines = f.readlines();
-            length = len(lines)
-        while(re.match(regex, lines[length - 1]) == None):
-            time.sleep(1)                  
-            if(length == 0):
-                continue
-            else:
-                f = open(self.InputFilepath + self.InputfilenameWithoutExt + '.IPlog', 'r')
-                lines = f.readlines()            
-                length = len(lines)
-                f.close()
-                print str(length) + ' ' + lines[length - 1]
-        f.close()
-                    ###################################################################
+        subprocess.Popen(Cmd, shell=True).wait()
         print "IPlogfile_produce has been finished "
     def EAlogfile_produce(self):
                 #进入针对xml解析的计算分子描述符原始文件的路径,进行计算
         Cmd = self.OrderPath + self.InputFilepath + self.Inputfilename + ' ' + self.InputfilenameWithoutExt + '.EAlog'
-        subprocess.Popen(Cmd, shell=True)
-        while(1):
-            try:
-                f = open(self.InputFilepath + self.InputfilenameWithoutExt + '.EAlog', 'r')
-            except:
-                continue
-            else:
-                break
-        #####################################################################to check the file to the end
+        subprocess.Popen(Cmd, shell=True).wait()
+
         f = open(self.InputFilepath + self.InputfilenameWithoutExt + '.EAlog', 'r')
         lines = f.readlines();
         length = len(lines)
@@ -312,34 +231,8 @@ class Gaussian():
     def EPlogfile_produce(self):
                         #进入针对xml解析的计算分子描述符原始文件的路径,进行计算
         Cmd = self.OrderPath + self.InputFilepath + self.Inputfilename + ' ' + self.InputfilenameWithoutExt + '.EPlog'
-        subprocess.Popen(Cmd, shell=True)
-        while(1):
-            try:
-                f = open(self.InputFilepath + self.InputfilenameWithoutExt + '.EPlog', 'r')
-            except:
-                continue
-            else:
-                break
-        #####################################################################to check the file to the end
-        f = open(self.InputFilepath + self.InputfilenameWithoutExt + '.EPlog', 'r')
-        lines = f.readlines();
-        length = len(lines)
-        regex = ".*Normal termination.*"
-        while(length == 0):
-            lines = f.readlines();
-            length = len(lines)
-        while(re.match(regex, lines[length - 1]) == None):
-            time.sleep(1)                  
-            if(length == 0):
-                continue
-            else:
-                f = open(self.InputFilepath + self.InputfilenameWithoutExt + '.EPlog', 'r')
-                lines = f.readlines()            
-                length = len(lines)
-                f.close()
-                print str(length) + ' ' + lines[length - 1]
-                #break
-        f.close()
+        subprocess.Popen(Cmd, shell=True).wait()
+
                     ###################################################################
     def GasPhase_MolecularDipoleMoment(self):
         #first search for'completed'appeared first time 
@@ -396,16 +289,10 @@ class Gaussian():
         self.GjfParameterChangeAndSaveChanged(self.InputFilepath + self.Inputfilename , l_regex , l_command_gasphase , self.InputFilepath+self.InputfilenameWithoutExt + '.MVgjf')
         ############################################################################################################
         Cmd = self.OrderPath + self.InputFilepath + self.Inputfilename +' '+self.InputfilenameWithoutExt+'.MVlog'
-        subprocess.Popen(Cmd, shell=True)
+        subprocess.Popen(Cmd, shell=True).wait()
         #search the prduced .log file for Molar volme
-        wait = 1
-        while(wait):
-            try:
-                f = open(self.InputFilepath + self.InputfilenameWithoutExt + '.MVlog', 'r')
-            except:
-                None
-            else:
-                wait = 0
+
+        f = open(self.InputFilepath + self.InputfilenameWithoutExt + '.MVlog', 'r')
         Loglines = f.readlines()
         f.close()        
         regex = ".*Molar volume =.*"
@@ -494,35 +381,8 @@ class Gaussian():
             pass
         else:
             Cmd = self.OrderPath + self.InputFilepath + self.InputfilenameWithoutExt + '.IPgjf' + ' ' + self.InputfilenameWithoutExt + '.freqOptlog'
-            subprocess.Popen(Cmd, shell=True)              
-        while(1):
-            try:
-                f = open(self.InputFilepath + self.InputfilenameWithoutExt + '.freqOptlog', 'r')
-                break
-            except:
-                continue
-        #####################################################################to check the file to the end
-        f = open(self.InputFilepath + self.InputfilenameWithoutExt + '.freqOptlog', 'r')
-        lines = f.readlines();
-        length = len(lines)
-        regex = ".*Normal termination.*"
-        regex2 = ".*Error termination.*"
-        while(length == 0):
-            lines = f.readlines();
-            length = len(lines)
-        while(re.match(regex, lines[length - 1]) == None):
-            time.sleep(1)                  
-            if(length == 0):
-                continue
-            else:
-                f = open(self.InputFilepath + self.InputfilenameWithoutExt + '.freqOptlog', 'r')
-                lines = f.readlines()            
-                length = len(lines)
-                f.close()
-                if(self.InputFileValidityCheck(lines, length, regex2) == False):
-                    self.InputExceptionFlag = True
-                    return;                
-        f.close()
+            subprocess.Popen(Cmd, shell=True).wait()             
+
                     ###################################################################
         # save standard orientation in log file
         f = open(self.InputFilepath + self.InputfilenameWithoutExt + '.freqOptlog', 'r')
@@ -701,7 +561,7 @@ class Gaussian():
                 self.__IonizationPotential = float(List[4])           
                 break
             length = length - 1    
-        print  self.__IonizationPotential
+        print  'self.__IonizationPotential:'+str(self.__IonizationPotential)
     def GasPhase_EnergyProtonation(self):
         l_regex = ["#p.*"  ]
         l_command_gasphase = ['#p opt freq' , ]
@@ -713,14 +573,8 @@ class Gaussian():
             pass
         else:
             Cmd = self.OrderPath + self.InputFilepath + self.InputfilenameWithoutExt + '.EPgjf' + ' ' + self.InputfilenameWithoutExt + '.EPlog'
-            subprocess.Popen(Cmd, shell=True)              
-        while(1):
-            try:
-                f = open(self.InputFilepath + self.InputfilenameWithoutExt + '.EPlog', 'r')
-                break
-            except:
-                continue
-            #parameter search
+            subprocess.Popen(Cmd, shell=True).wait()             
+        #parameter search
         f = open(self.InputFilepath + self.InputfilenameWithoutExt + '.EPlog', 'r')
         lines = f.readlines() 
         f.close()  
@@ -801,15 +655,7 @@ class Gaussian():
             self.GjfParameterChange(self.InputFilepath + self.Inputfilename, '#p.*', '#p rb3lyp/6-31+g(d,p) opt freq scrf=(iefpcm,solvent=water)')       
                                 #进入针对xml解析的计算分子描述符原始文件的路径,进行计算
             Cmd = self.OrderPath + self.InputFilepath + self.Inputfilename + ' ' + self.InputfilenameWithoutExt + '.Fluoptlog'
-            subprocess.Popen(Cmd, shell=True)
-            while(1):
-                try:
-                    f = open(self.InputFilepath + self.InputfilenameWithoutExt + '.Fluoptlog', 'r')
-                    break
-                except:
-                    continue
-            f.close()
-        ################################################################################################to ensure the file to the end 
+            subprocess.Popen(Cmd, shell=True).wait()
         f = open(self.InputFilepath + self.InputfilenameWithoutExt + '.Fluoptlog', 'r')
         lines = f.readlines();
         length = len(lines)
@@ -860,63 +706,43 @@ class Gaussian():
     #compute electronstaticpotential with gsgrid
     def Gaussian_electronstaticpotential_chkTofchk(self):
             while(1):              
-                if(os.path.isfile(globalpath + self.InputfilenameWithoutExt + '.chk')):
-                    Cmd = 'formchk ' + globalpath + self.InputfilenameWithoutExt + '.chk'                            
-                    subprocess.Popen(Cmd, shell=True)
+                if(os.path.isfile(globalpath +'controllers/'+self.InputfilenameWithoutExt + '.chk')):
+                    Cmd = 'formchk ' + globalpath +'controllers/'+ self.InputfilenameWithoutExt + '.chk'                            
+                    subprocess.Popen(Cmd, shell=True).wait()
                     print "formchk has been finished"
                     # to produce fchk file completely
-                    time.sleep(2)
+                    
                     break
                 else:
-                    print globalpath + self.InputfilenameWithoutExt + '.chk'
+                    print globalpath + 'controllers'+'controllers/'+self.InputfilenameWithoutExt + '.chk'
                     print"chk file doesn't exist"
                     continue
             while(1):
                 try:
-                    shutil.move(globalpath + self.InputfilenameWithoutExt + '.fchk', self.InputFilepath + self.InputfilenameWithoutExt + '.fchk')
+                    shutil.move(globalpath + 'controllers/'+self.InputfilenameWithoutExt + '.fchk', self.InputFilepath + self.InputfilenameWithoutExt + '.fchk')
                     break;
                 except:
                     print 'no file of .fck to move'
     #transform fchk into cub in globalpath and other path doesn't work
     def Gaussian_electronstaticpotential_fckTocub(self):
-                time.sleep(2)
                 Cmd = 'cubegen 0 density=scf ' + self.InputFilepath + self.InputfilenameWithoutExt + '.fchk' + ' ' + globalpath + self.InputfilenameWithoutExt + '_density.cub 0 h'
 
-                subprocess.Popen(Cmd, shell=True)
+                subprocess.Popen(Cmd, shell=True).wait()
                 Cmd = 'cubegen 0 potential=scf ' + self.InputFilepath + self.InputfilenameWithoutExt + '.fchk' + ' ' + globalpath + self.InputfilenameWithoutExt + '_potential.cub 0 h'
-                subprocess.Popen(Cmd, shell=True)
+                subprocess.Popen(Cmd, shell=True).wait()
 
          
     def Gaussian_electronstaticpotential_output(self):
-        while(1):
-            try:
-                p_fp_density = open(globalpath + self.InputfilenameWithoutExt + '_density.cub','r')
-            except:
-                continue
-            if(len(p_fp_density.readlines()) > 0):
-                p_fp_density.close()
-                break
-            else:
-                continue
-        while(1):
-            try:
-                p_fp_potential = open(globalpath + self.InputfilenameWithoutExt + '_potential.cub','r')
-            except:
-                continue
-            if(len(p_fp_potential.readlines()) > 0):
-                p_fp_potential.close()
-                break
-            else:
-                continue
-        #time.sleep(2)
-        #arg0 = '\n'
+
         arg1 = globalpath + self.InputfilenameWithoutExt + '_density.cub'
-        arg2 = '12'
-        arg3 = '0.0001'
-        arg4 = '4'
+        arg2 = ' 12'
+        arg3 = ' 0.0001'
+        arg4 = ' 4'
         arg5 = globalpath + self.InputfilenameWithoutExt + '_potential.cub'
         arg6 = ' n'
         p = subprocess.Popen(['/home/est863/gsgrid1.7_src/gsgrid', ], stdin=subprocess.PIPE, stderr=subprocess.PIPE, shell=False)
+        
+        #subprocess.Popen.communicate(self, input)
         #p.stdin.write(arg0)
         p.stdin.write('\'' + arg1 + '\'' + '\n')
         p.stdin.write(arg2 + '\n')
@@ -924,6 +750,8 @@ class Gaussian():
         p.stdin.write(arg4 + '\n')
         p.stdin.write('\'' + arg5 + '\'' + '\n')
         p.stdin.write(arg6 + '\n')
+        p.stdin.write('s' + '\n')
+        p.wait()
     def Gaussian_electronstaticpotential_parameterCompute(self):
         print "Gaussian_electronstaticpotential_parameterCompute begins"
         #deal with output.txt  output_positive.txt output_negtive.txt 
@@ -941,13 +769,12 @@ class Gaussian():
                 break
             except:
                 continue
-        time.sleep(2)
         l_lines = p_fp.readlines()
         s_len = len(l_lines)
         l_neg_lines = []
         l_pos_lines = []
         '''use output.txt to produce positive/negative file'''
-        for i in range(0,s_len):
+        for i in range(0 , s_len):
             if float( l_lines[i].split(' ')[-1]) < 0:
                 l_neg_lines.append(l_lines[i])
             else:
